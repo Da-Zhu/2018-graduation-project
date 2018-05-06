@@ -12,6 +12,8 @@ from soft_keyboard import *
 
 import os
 import cv2
+import serial
+import time
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -75,8 +77,11 @@ class FaceRec(QWidget):
     
     def __init__(self, mainWindow):
         super(FaceRec, self).__init__()
+        self.ser = serial.Serial('/dev/ttyAMA0',9600)
         self.mainWindow = mainWindow
         self.manager = userManager.UserManager()
+        #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        #self.usart_init()
         
         self.setupUi(self)
         
@@ -131,9 +136,12 @@ class FaceRec(QWidget):
         self.video.release()
         self.mainWindow.setupUi(self.mainWindow)
 
-     '''
-    def pushButton_back_clicked(self):                           #串口发送程序
-      
+     
+    def usart_init(self)
+        ser = serial.Serial('/dev/ttyAMA0',9600)
+    '''
+    def usart_send(self):                           #串口发送程序
+        self.
        
      '''
 
@@ -186,6 +194,10 @@ class FaceRec(QWidget):
 
                 if self.recognizer.confidence <= 60:
                     self.video_frame.setRectColor(0, 255, 0)
+                    if str(userName) == 'laowang':
+                        self.ser.write('laowang')
+
+
                 else:
                     self.video_frame.setRectColor(255, 0, 0)
             
